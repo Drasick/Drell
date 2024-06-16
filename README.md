@@ -32,8 +32,7 @@ Install the required Python packages using pip:
 pip install torch transformers scikit-learn tqdm pandas openpyxl
 ```
 
-Ensure the custom module `docre` is available in your Python path.
-Note that `c2net` is not necessary to use, you just need to replace all the paths with the `c2net` involved with your local paths.
+Ensure the custom module `docre` is available in your Python path. Note that `c2net` is not necessary to use, you just need to replace all the paths with the `c2net` involved with your local paths.
 
 ### Usage
 
@@ -74,4 +73,82 @@ After running the script, the results are evaluated using the `evaluate` functio
 - Ensure the `dataset_path`, `pretrain_model_path`, and other paths are correctly set according to your environment.
 - Modify the top-k variable to change the number of top predictions considered.
 - The script is set to ignore warnings for cleaner output.
+
+## `test_only_GPT.py`
+
+### Overview
+
+This project utilizes `GPT-3` for document-level relation extraction. The provided code processes datasets, predicts relations using the ATLOP model, and evaluates the results.
+
+### Requirements
+
+- Python 3.7+
+- PyTorch
+- Transformers
+- pandas
+- tqdm
+- OpenAI API key
+- docre (custom module)
+- c2net (custom module)
+
+### Installation
+
+Install the required Python packages using pip:
+
+```bash
+pip install torch transformers pandas tqdm openai
+```
+
+Ensure the custom module `docre` is available in your Python path. Note that `c2net` is not necessary to use, you just need to replace all the paths with the `c2net` involved with your local paths.
+
+### Setup
+
+1. **Set up OpenAI API Key**: Set your OpenAI API key in the `get_completion` function.
+2. **Prepare the Environment**: Ensure the dataset and required files are available in the specified paths.
+
+### Usage
+
+#### Running the Script
+
+Execute the script with Python:
+
+```bash
+python test_only_GPT.py
+```
+
+#### Parameters
+
+- `dataset_path`: Path to the dataset directory.
+- `rel_templates_path`: Path to the relationship templates directory.
+- `logits_path`: Path to the logits directory.
+
+#### Script Workflow
+
+1. **Load Data**: Loads relation information, document data, and relation templates.
+2. **Generate Prompts**: Constructs prompts and inputs for the model based on the loaded data.
+3. **Run the Model**: Uses GPT-3 to generate predictions.
+4. **Evaluate Results**: Saves the model's predictions and evaluates them against the ground truth using the provided evaluation function.
+
+#### Example Output
+
+The script prints example inputs and completions, showing the format of the processed data and the model's predictions.
+
+```plaintext
+##INSTRUCTION: Read the ##DOCUMENT and answer the ##QUESTION. Write the answers in ##ANSWER.
+##DOCUMENT: ...
+##QUESTION: Which of the following is right?
+...
+##ANSWER:
+```
+
+#### Evaluation
+
+After running the script, the results are evaluated using the `evaluate` function, which compares the model's predictions with the ground truth and outputs performance metrics.
+
+### Notes
+
+- Ensure the `dataset_path`, `rel_templates_path`, and `logits_path` are correctly set according to your environment.
+- Modify the `TOP_K` variable to change the number of top predictions considered.
+- The script is set to ignore warnings for cleaner output.
+
   
