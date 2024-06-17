@@ -151,4 +151,71 @@ After running the script, the results are evaluated using the `evaluate` functio
 - Modify the `TOP_K` variable to change the number of top predictions considered.
 - The script is set to ignore warnings for cleaner output.
 
+
+## `test_refiner.py`
+
+This project refines document-level relation extraction using `llama3-8b-instruct`. The script processes documents, refines relation extraction results, and evaluates the performance using a SLM original performance and refinement after LLM.
+
+### Requirements
+
+- Python 3.7+
+- PyTorch
+- Transformers
+- TQDM
+- Pandas
+
+### Installation
+
+1. Install the required Python packages:
+    ```bash
+    pip install torch transformers tqdm pandas
+    ```
+
+2. Clone this repository and navigate to the project directory.
+
+### Usage
+
+#### Prepare Data
+
+1. Ensure your dataset is prepared and paths are correctly set in the script:
+    - Dataset Path: `c2net_context.dataset_path + "/dataset"`
+    - Relation Templates Path: `c2net_context.dataset_path + "/rel_templates"`
+    - DocRED Logits Path: `c2net_context.dataset_path + "/docred-logits"`
+
+2. Set the pre-trained model path:
+    - Meta-Llama-3-8B-Instruct Path: `c2net_context.pretrain_model_path + "/Meta-Llama-3-8B-Instruct"`
+
+3. Set the output path:
+    - `c2net_context.output_path`
+  
+4. Ensure the custom module `docre` is available in your Python path. Note that `c2net` is not necessary to use, you just need to replace all the paths with the `c2net` involved with your local paths.
+
+#### Run the Script
+
+Execute the script to process and refine the documents:
+```bash
+python test_refiner.py
+```
+
+#### Example Output
+
+The script prints example inputs and completions, showing the format of the processed data and the model's predictions.
+
+```plaintext
+##INSTRUCTION: Read the ##DOCUMENT and answer the ##QUESTION. Write the answers in ##ANSWER.
+##DOCUMENT: ...
+##QUESTION: Which of the following is right?
+...
+##ANSWER:
+```
+
+#### Evaluation
+
+After running the script, the results are evaluated using the `evaluate` function, which compares the model's predictions with the ground truth and outputs performance metrics.
+
+### Notes
+
+- Ensure the `dataset_path`, `rel_templates_path`, and `logits_path` are correctly set according to your environment.
+- Modify the `TOP_K` variable to change the number of top predictions considered.
+- The script is set to ignore warnings for cleaner output.
   
